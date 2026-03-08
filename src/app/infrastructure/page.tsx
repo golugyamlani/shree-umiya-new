@@ -51,7 +51,7 @@ export default function InfrastructurePage() {
                     <div className="bg-white rounded-sm shadow-xl border border-gray-100 overflow-hidden flex flex-col md:flex-row">
                         <div className="w-full md:w-5/12 relative">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?q=80&w=1000&auto=format&fit=crop" alt="Warehouse facility" className="w-full h-full object-cover min-h-[300px]" />
+                            <img src="https://images.unsplash.com/photo-Cp5NBK36IU8?q=80&w=1000&auto=format&fit=crop" alt="Warehouse facility" className="w-full h-full object-cover min-h-[300px]" />
                         </div>
                         <div className="w-full md:w-7/12 p-10 md:p-14 flex flex-col justify-center">
                             <h2 className="text-3xl font-extrabold font-heading text-secondary mb-6 flex items-center gap-3">
@@ -89,7 +89,7 @@ export default function InfrastructurePage() {
                         </div>
                         <div className="w-full md:w-5/12 relative order-1 md:order-2">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop" alt="Quality inspection" className="w-full h-full object-cover min-h-[300px]" />
+                            <img src="https://images.unsplash.com/photo-ZaQCL7EY2Sg?q=80&w=1000&auto=format&fit=crop" alt="Quality inspection" className="w-full h-full object-cover min-h-[300px]" />
                         </div>
                     </div>
 

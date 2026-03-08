@@ -9,7 +9,7 @@ export default function AboutPage() {
         <div className="flex flex-col min-h-screen bg-white">
             {/* Hero Intro Banner */}
             <section className="relative bg-secondary text-white py-24 lg:py-32">
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1586528116311-ad8ed7c83a7f?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-20 brightness-50"></div>
+                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-mC5kGE4xdSU?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-20 brightness-50"></div>
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-4xl">
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold font-heading leading-tight mb-6">
                         Operational Strength & Core Values
@@ -53,9 +53,9 @@ export default function AboutPage() {
                         <div className="relative">
                             <div className="grid grid-cols-2 gap-4">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=800&auto=format&fit=crop" alt="Quality check" className="rounded-sm shadow-md object-cover h-64 w-full" />
+                                <img src="https://images.unsplash.com/photo-CCoKKC2S0oY?q=80&w=800&auto=format&fit=crop" alt="Quality check" className="rounded-sm shadow-md object-cover h-64 w-full" />
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src="https://images.unsplash.com/photo-1587293852726-692b5e406437?q=80&w=800&auto=format&fit=crop" alt="Boxes stacked" className="rounded-sm shadow-md object-cover h-64 w-full mt-8" />
+                                <img src="https://images.unsplash.com/photo-2O2RZfPI26Y?q=80&w=800&auto=format&fit=crop" alt="Boxes stacked" className="rounded-sm shadow-md object-cover h-64 w-full mt-8" />
                             </div>
                         </div>
                     </div>

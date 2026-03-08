@@ -8,7 +8,7 @@ export default function IndustriesPage() {
         <div className="flex flex-col min-h-screen bg-white">
             {/* Target Segments Hero */}
             <section className="relative bg-secondary text-white py-24 lg:py-32">
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1551882547-ff40c0d5b5a4?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center md:bg-fixed opacity-15 brightness-75"></div>
+                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-Cp5NBK36IU8?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center md:bg-fixed opacity-15 brightness-75"></div>
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-4xl">
                     <span className="text-accent font-bold tracking-widest uppercase text-sm mb-4 block">Target Solutions</span>
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold font-heading mb-6 tracking-tight">
@@ -49,7 +49,7 @@ export default function IndustriesPage() {
                         </div>
                         <div className="lg:w-1/2 w-full order-1 lg:order-2">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src="https://images.unsplash.com/photo-1542314831-c6a4d14d23bb?q=80&w=1200&auto=format&fit=crop" alt="Hotel room" className="rounded-sm shadow-xl w-full h-[400px] object-cover" />
+                            <img src="https://images.unsplash.com/photo-ZaQCL7EY2Sg?q=80&w=1200&auto=format&fit=crop" alt="Hotel room" className="rounded-sm shadow-xl w-full h-[400px] object-cover" />
                         </div>
                     </div>
 
@@ -57,7 +57,7 @@ export default function IndustriesPage() {
                     <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
                         <div className="lg:w-1/2 w-full">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1200&auto=format&fit=crop" alt="Hospital hallway" className="rounded-sm shadow-xl w-full h-[400px] object-cover" />
+                            <img src="https://images.unsplash.com/photo-mC5kGE4xdSU?q=80&w=1200&auto=format&fit=crop" alt="Hospital hallway" className="rounded-sm shadow-xl w-full h-[400px] object-cover" />
                         </div>
                         <div className="lg:w-1/2 w-full">
                             <div className="flex items-center gap-4 mb-6">
@@ -107,7 +107,7 @@ export default function IndustriesPage() {
                         </div>
                         <div className="lg:w-1/2 w-full order-1 lg:order-2">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=1200&auto=format&fit=crop" alt="Hostel dormitory" className="rounded-sm shadow-xl w-full h-[400px] object-cover" />
+                            <img src="https://images.unsplash.com/photo-OPFLRprH4DM?q=80&w=1200&auto=format&fit=crop" alt="Hostel dormitory" className="rounded-sm shadow-xl w-full h-[400px] object-cover" />
                         </div>
                     </div>
 
