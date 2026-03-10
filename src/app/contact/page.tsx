@@ -138,7 +138,7 @@ export default function ContactPage() {
                                 {/* Google Maps Embed Placeholder - visually matched map styling */}
                                 <div className="absolute inset-0 bg-white/10 mix-blend-overlay z-10 pointer-events-none group-hover:bg-transparent transition-colors"></div>
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src="https://images.unsplash.com/photo-1ErqKqfQhqs?q=80&w=800&auto=format&fit=crop" alt="Map location" className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" />
+                                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop" alt="Map location" className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" />
                                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
                                     <div className="relative">
                                         <MapPin className="w-10 h-10 text-primary drop-shadow-2xl" />

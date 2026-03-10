@@ -25,18 +25,9 @@ export default function Navbar() {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex h-24 items-center justify-between">
                     <div className="flex items-center">
-                        <Link href="/" className="flex items-center gap-3">
-                            <div className="flex h-12 w-12 items-center justify-center rounded bg-secondary text-white font-bold text-xl font-heading shadow-md">
-                                SU
-                            </div>
-                            <div className="hidden sm:flex flex-col">
-                                <span className="text-xl font-bold text-secondary font-heading leading-tight tracking-tight">
-                                    Shree Umiya
-                                </span>
-                                <span className="text-[10px] uppercase font-bold text-primary tracking-wider">
-                                    Enterprise
-                                </span>
-                            </div>
+                        <Link href="/" className="flex items-center">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src="/logo.png" alt="Shree Umiya Enterprise" className="h-14 w-auto object-contain" />
                         </Link>
                     </div>
                     <nav className="hidden lg:flex items-center gap-6">

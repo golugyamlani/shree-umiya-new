@@ -11,14 +11,14 @@ const stats = [
 ];
 
 const categories = [
-  { name: "Hotel Linen & Bedding", icon: Bed, image: "https://images.unsplash.com/photo-mC5kGE4xdSU?q=80&w=800&auto=format&fit=crop" },
-  { name: "Towels & Bath Essentials", icon: Droplets, image: "https://images.unsplash.com/photo-OPFLRprH4DM?q=80&w=800&auto=format&fit=crop" },
-  { name: "Guest Room Amenities", icon: ConciergeBell, image: "https://images.unsplash.com/photo-Cp5NBK36IU8?q=80&w=800&auto=format&fit=crop" },
-  { name: "Housekeeping Supplies", icon: PaintBucket, image: "https://images.unsplash.com/photo-ZaQCL7EY2Sg?q=80&w=800&auto=format&fit=crop" },
-  { name: "Mattresses & Protectors", icon: Bed, image: "https://images.unsplash.com/photo-1ErqKqfQhqs?q=80&w=800&auto=format&fit=crop" },
-  { name: "Disposable & Hygiene", icon: PlusSquare, image: "https://images.unsplash.com/photo-7KiHRo0yRrw?q=80&w=800&auto=format&fit=crop" },
-  { name: "F&B Service Essentials", icon: Coffee, image: "https://images.unsplash.com/photo-CCoKKC2S0oY?q=80&w=800&auto=format&fit=crop" },
-  { name: "Custom Branding", icon: Factory, image: "https://images.unsplash.com/photo-2O2RZfPI26Y?q=80&w=800&auto=format&fit=crop" },
+  { name: "Hotel Linen & Bedding", icon: Bed, image: "https://images.unsplash.com/photo-1582582621959-48d27397dc69?q=80&w=800&auto=format&fit=crop" },
+  { name: "Towels & Bath Essentials", icon: Droplets, image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=800&auto=format&fit=crop" },
+  { name: "Guest Room Amenities", icon: ConciergeBell, image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800&auto=format&fit=crop" },
+  { name: "Housekeeping Supplies", icon: PaintBucket, image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800&auto=format&fit=crop" },
+  { name: "Mattresses & Protectors", icon: Bed, image: "https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=800&auto=format&fit=crop" },
+  { name: "Disposable & Hygiene", icon: PlusSquare, image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?q=80&w=800&auto=format&fit=crop" },
+  { name: "F&B Service Essentials", icon: Coffee, image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=800&auto=format&fit=crop" },
+  { name: "Custom Branding", icon: Factory, image: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?q=80&w=800&auto=format&fit=crop" },
 ];
 
 const industries = [
@@ -45,7 +45,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative bg-secondary text-white py-24 lg:py-32 overflow-hidden">
         {/* Placeholder image for hero background */}
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-fd8gLpglOjc?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center md:bg-fixed opacity-15"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center md:bg-fixed opacity-15"></div>
         {/* Subtle geometric overlay for B2B industrial feel */}
         <div className="absolute inset-0 bg-gradient-to-r from-secondary via-secondary/90 to-transparent"></div>
 
@@ -158,7 +158,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-accent translate-x-4 translate-y-4 rounded-sm"></div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://images.unsplash.com/photo-u5rXrYw_hgM?q=80&w=1200&auto=format&fit=crop"
+                src="https://images.unsplash.com/photo-1553413077-190dd305871c?q=80&w=800&auto=format&fit=crop"
                 alt="Warehouse operations"
                 className="relative z-10 shadow-xl rounded-sm object-cover h-[500px] w-full"
               />
@@ -193,7 +193,7 @@ export default function Home() {
 
       {/* CTA Banner */}
       <section className="bg-secondary relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1ErqKqfQhqs?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-10"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556740749-887f6717d7e4?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-10"></div>
         <div className="container mx-auto px-4 py-20 sm:px-6 lg:px-8 relative z-10 text-center">
           <h2 className="text-3xl font-extrabold text-white font-heading sm:text-4xl mb-6">
             Looking for a Reliable Hospitality Supply Partner?

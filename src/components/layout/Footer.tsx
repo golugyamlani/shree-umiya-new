@@ -7,18 +7,9 @@ export default function Footer() {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
                     <div className="space-y-6">
-                        <Link href="/" className="inline-flex items-center gap-3">
-                            <div className="flex h-12 w-12 items-center justify-center rounded bg-white text-secondary font-bold text-2xl font-heading shadow-md">
-                                SU
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-2xl font-bold text-white font-heading leading-tight tracking-tight">
-                                    Shree Umiya
-                                </span>
-                                <span className="text-xs uppercase font-bold text-accent tracking-widest">
-                                    Enterprise
-                                </span>
-                            </div>
+                        <Link href="/" className="inline-flex items-center">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src="/logo.png" alt="Shree Umiya Enterprise" className="h-14 w-auto object-contain invert brightness-0" />
                         </Link>
                         <p className="text-sm leading-relaxed text-gray-300 pr-4">
                             Premium Hospitality Supplies. Built for Scale. Trusted bulk suppliers for hotels, hospitals, hostels, and institutions across India.
