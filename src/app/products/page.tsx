@@ -14,19 +14,50 @@ const CATEGORIES = [
     "Platform Beds"
 ];
 
-const PRODUCTS = [
-    { id: 1, name: "Premium White Duvet Cover", category: "Platform Beds", moq: "50 Pieces", spec: "300 TC Cotton, Commercial Grade. Designed for high-cycle industrial laundering. Features a hidden zipper closure and internal corner ties to secure the duvet insert.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=800&auto=format&fit=crop" },
-    { id: 2, name: "Luxury Bath Towel Set", category: "Bath", moq: "100 Sets", spec: "600 GSM, 100% Ring Spun Cotton. Double-stitched hems for enhanced durability. Extremely plush and absorbent, perfect for 4-star and 5-star properties.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=800&auto=format&fit=crop" },
+type ProductVariant = {
+    colors?: string[];
+    capacity?: string[];
+    dimensions?: string[];
+};
+
+type Product = {
+    id: number;
+    name: string;
+    category: string;
+    moq: string;
+    spec: string;
+    price: string;
+    image: string;
+    variants?: ProductVariant;
+};
+
+const PRODUCTS: Product[] = [
+    { id: 1, name: "Premium White Duvet Cover", category: "Platform Beds", moq: "50 Pieces", spec: "300 TC Cotton, Commercial Grade. Designed for high-cycle industrial laundering. Features a hidden zipper closure and internal corner ties to secure the duvet insert.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=800&auto=format&fit=crop", variants: { colors: ["White", "Charcoal", "Navy"], dimensions: ["Twin", "Queen", "King"] } },
+    { id: 2, name: "Luxury Bath Towel Set", category: "Bath", moq: "100 Sets", spec: "600 GSM, 100% Ring Spun Cotton. Double-stitched hems for enhanced durability. Extremely plush and absorbent, perfect for 4-star and 5-star properties.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=800&auto=format&fit=crop", variants: { colors: ["White", "Beige"] } },
     { id: 3, name: "Eco-Friendly Toiletries Kit", category: "Amenities", moq: "500 Kits", spec: "Includes bamboo toothbrush, sulphate-free soaps, and biodegradable packaging. Sourced sustainably to help your property meet green certification standards.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800&auto=format&fit=crop" },
-    { id: 4, name: "Heavy Duty Cleaning Cart", category: "Paper & Bio Products", moq: "5 Units", spec: "3-shelf capacity with a 25-gallon vinyl bag. Non-marking 8-inch wheels. Built from commercial-grade molded plastic to resist cracking and peeling.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800&auto=format&fit=crop" },
-    { id: 5, name: "Hypoallergenic Mattress Protector", category: "Platform Beds", moq: "50 Pieces", spec: "Waterproof, breathable TPU layer. Protects against dust mites, fluids, and perspiration. Machine washable in warm water. Knitted skirt stretches to fit up to 18-inch deep mattresses.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=800&auto=format&fit=crop" },
-    { id: 6, name: "Biodegradable Trash Bags", category: "Paper & Bio Products", moq: "1000 Rolls", spec: "Heavy-duty 50L capacity. Made from biodegradable plant-based materials. Puncture and tear resistant. Ideal for room bins and public area receptacles.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?q=80&w=800&auto=format&fit=crop" },
+    { id: 4, name: "Heavy Duty Cleaning Cart", category: "Paper & Bio Products", moq: "5 Units", spec: "3-shelf capacity with a 25-gallon vinyl bag. Non-marking 8-inch wheels. Built from commercial-grade molded plastic to resist cracking and peeling.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800&auto=format&fit=crop", variants: { capacity: ["Standard (3-Shelf)", "Large (4-Shelf, Dual Bag)"] } },
+    { id: 5, name: "Hypoallergenic Mattress Protector", category: "Platform Beds", moq: "50 Pieces", spec: "Waterproof, breathable TPU layer. Protects against dust mites, fluids, and perspiration. Machine washable in warm water. Knitted skirt stretches to fit up to 18-inch deep mattresses.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=800&auto=format&fit=crop", variants: { dimensions: ["Single", "Twin", "Queen", "King"] } },
+    { id: 6, name: "Biodegradable Trash Bags", category: "Paper & Bio Products", moq: "1000 Rolls", spec: "Heavy-duty 50L capacity. Made from biodegradable plant-based materials. Puncture and tear resistant. Ideal for room bins and public area receptacles.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?q=80&w=800&auto=format&fit=crop", variants: { capacity: ["15L", "30L", "50L", "100L"], colors: ["Green", "Black", "Clear"] } },
 ];
 
 export default function ProductsPage() {
     const [activeCategory, setActiveCategory] = useState("All");
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedProduct, setSelectedProduct] = useState<typeof PRODUCTS[0] | null>(null);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [selectedVariants, setSelectedVariants] = useState<{ [key: string]: string }>({});
+
+    const handleProductSelect = (product: Product) => {
+        setSelectedProduct(product);
+        const defaults: { [key: string]: string } = {};
+        if (product.variants?.colors?.length) defaults.colors = product.variants.colors[0];
+        if (product.variants?.capacity?.length) defaults.capacity = product.variants.capacity[0];
+        if (product.variants?.dimensions?.length) defaults.dimensions = product.variants.dimensions[0];
+        setSelectedVariants(defaults);
+    };
+
+    const handleVariantChange = (type: string, value: string) => {
+        setSelectedVariants(prev => ({ ...prev, [type]: value }));
+    };
 
     const filteredProducts = PRODUCTS.filter(p => {
         const matchesCategory = activeCategory === "All" || p.category === activeCategory;
@@ -96,7 +127,7 @@ export default function ProductsPage() {
                             {filteredProducts.map(product => (
                                 <div
                                     key={product.id}
-                                    onClick={() => setSelectedProduct(product)}
+                                    onClick={() => handleProductSelect(product)}
                                     className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden group hover:shadow-xl hover:border-primary/30 transition-all duration-300 flex flex-col cursor-pointer"
                                 >
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -139,7 +170,7 @@ export default function ProductsPage() {
                     {/* Backdrop */}
                     <div
                         className="absolute inset-0 bg-secondary/80 backdrop-blur-sm cursor-pointer"
-                        onClick={() => setSelectedProduct(null)}
+                        onClick={() => { setSelectedProduct(null); setSelectedVariants({}); }}
                     ></div>
 
                     {/* Modal Content */}
@@ -147,7 +178,7 @@ export default function ProductsPage() {
                         className="relative bg-white rounded-sm shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col md:flex-row overflow-hidden animate-in fade-in zoom-in-95 duration-200"
                     >
                         <button
-                            onClick={() => setSelectedProduct(null)}
+                            onClick={() => { setSelectedProduct(null); setSelectedVariants({}); }}
                             className="absolute top-4 right-4 z-20 p-2 bg-white/80 hover:bg-white backdrop-blur-md rounded-full text-secondary hover:text-primary transition-colors shadow-sm"
                             aria-label="Close modal"
                         >
@@ -176,6 +207,75 @@ export default function ProductsPage() {
                                     <p className="text-gray-600 text-base leading-relaxed">{selectedProduct.spec}</p>
                                 </div>
 
+                                {/* Variants Section */}
+                                {selectedProduct.variants && (
+                                    <div className="space-y-6 bg-gray-50 p-6 rounded-sm border border-gray-100">
+                                        {selectedProduct.variants.colors && (
+                                            <div>
+                                                <h4 className="text-xs font-bold uppercase tracking-widest text-secondary mb-3">Select Color</h4>
+                                                <div className="flex flex-wrap gap-3">
+                                                    {selectedProduct.variants.colors.map(color => (
+                                                        <button
+                                                            key={color}
+                                                            onClick={() => handleVariantChange('colors', color)}
+                                                            className={cn(
+                                                                "px-4 py-2 border rounded-sm text-sm font-semibold transition-all",
+                                                                selectedVariants.colors === color
+                                                                    ? "bg-secondary text-white border-secondary shadow-md"
+                                                                    : "bg-white text-gray-600 border-gray-200 hover:border-primary hover:text-primary"
+                                                            )}
+                                                        >
+                                                            {color}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                        {selectedProduct.variants.dimensions && (
+                                            <div>
+                                                <h4 className="text-xs font-bold uppercase tracking-widest text-secondary mb-3">Select Dimensions</h4>
+                                                <div className="flex flex-wrap gap-3">
+                                                    {selectedProduct.variants.dimensions.map(dim => (
+                                                        <button
+                                                            key={dim}
+                                                            onClick={() => handleVariantChange('dimensions', dim)}
+                                                            className={cn(
+                                                                "px-4 py-2 border rounded-sm text-sm font-semibold transition-all",
+                                                                selectedVariants.dimensions === dim
+                                                                    ? "bg-secondary text-white border-secondary shadow-md"
+                                                                    : "bg-white text-gray-600 border-gray-200 hover:border-primary hover:text-primary"
+                                                            )}
+                                                        >
+                                                            {dim}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                        {selectedProduct.variants.capacity && (
+                                            <div>
+                                                <h4 className="text-xs font-bold uppercase tracking-widest text-secondary mb-3">Select Capacity</h4>
+                                                <div className="flex flex-wrap gap-3">
+                                                    {selectedProduct.variants.capacity.map(cap => (
+                                                        <button
+                                                            key={cap}
+                                                            onClick={() => handleVariantChange('capacity', cap)}
+                                                            className={cn(
+                                                                "px-4 py-2 border rounded-sm text-sm font-semibold transition-all",
+                                                                selectedVariants.capacity === cap
+                                                                    ? "bg-secondary text-white border-secondary shadow-md"
+                                                                    : "bg-white text-gray-600 border-gray-200 hover:border-primary hover:text-primary"
+                                                            )}
+                                                        >
+                                                            {cap}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="bg-gray-50 p-4 rounded-sm border border-gray-100">
                                         <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider block mb-1">Pricing Tier</span>
@@ -190,7 +290,13 @@ export default function ProductsPage() {
 
                             <div className="mt-10 pt-6 border-t border-gray-100">
                                 <button
-                                    onClick={() => alert(`Item "${selectedProduct.name}" added to your quote.`)}
+                                    onClick={() => {
+                                        const variantString = Object.entries(selectedVariants).map(([k,v]) => `${k}: ${v}`).join(', ');
+                                        const itemDesc = variantString ? `${selectedProduct.name} (${variantString})` : selectedProduct.name;
+                                        alert(`Item "${itemDesc}" added to your quote.`);
+                                        setSelectedProduct(null);
+                                        setSelectedVariants({});
+                                    }}
                                     className="w-full bg-secondary hover:bg-primary text-white py-4 rounded-sm font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-3 shadow-lg"
                                 >
                                     <ShoppingCart className="w-5 h-5" /> Add to Quote
