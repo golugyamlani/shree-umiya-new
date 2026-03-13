@@ -11,14 +11,11 @@ const stats = [
 ];
 
 const categories = [
-  { name: "Hotel Linen & Bedding", icon: Bed, image: "https://images.unsplash.com/photo-1582582621959-48d27397dc69?q=80&w=800&auto=format&fit=crop" },
-  { name: "Towels & Bath Essentials", icon: Droplets, image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=800&auto=format&fit=crop" },
-  { name: "Guest Room Amenities", icon: ConciergeBell, image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800&auto=format&fit=crop" },
-  { name: "Housekeeping Supplies", icon: PaintBucket, image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800&auto=format&fit=crop" },
-  { name: "Mattresses & Protectors", icon: Bed, image: "https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=800&auto=format&fit=crop" },
-  { name: "Disposable & Hygiene", icon: PlusSquare, image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?q=80&w=800&auto=format&fit=crop" },
-  { name: "F&B Service Essentials", icon: Coffee, image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=800&auto=format&fit=crop" },
-  { name: "Custom Branding", icon: Factory, image: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?q=80&w=800&auto=format&fit=crop" },
+  { name: "Amenities", icon: ConciergeBell, image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800&auto=format&fit=crop" },
+  { name: "Bath", icon: Droplets, image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=800&auto=format&fit=crop" },
+  { name: "Furniture", icon: Bed, image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=800&auto=format&fit=crop" },
+  { name: "Paper & Bio Products", icon: PlusSquare, image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?q=80&w=800&auto=format&fit=crop" },
+  { name: "Platform Beds", icon: Bed, image: "https://images.unsplash.com/photo-1505693314120-0d443867891c?q=80&w=800&auto=format&fit=crop" },
 ];
 
 const industries = [
@@ -96,7 +93,7 @@ export default function Home() {
             <p className="text-lg text-gray-600">Comprehensive supply solutions designed to meet the rigorous demands of the hospitality industry.</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {categories.map((category) => (
               <Link href="/products" key={category.name} className="group relative rounded-sm overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full">
                 <div className="relative h-48 w-full overflow-hidden">

@@ -37,7 +37,7 @@ export default function Footer() {
                             <span className="w-4 h-1 bg-accent inline-block"></span> Categories
                         </h3>
                         <ul className="space-y-4">
-                            {['Hotel Linen & Bedding', 'Towels & Bath Essentials', 'Guest Room Amenities', 'Housekeeping Supplies', 'Disposable & Hygiene'].map((item) => (
+                            {['Amenities', 'Bath', 'Furniture', 'Paper & Bio Products', 'Platform Beds'].map((item) => (
                                 <li key={item}>
                                     <Link href="/products" className="text-sm text-gray-300 hover:text-accent transition-colors font-medium">
                                         {item}
