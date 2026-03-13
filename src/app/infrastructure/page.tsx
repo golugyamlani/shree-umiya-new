@@ -98,7 +98,7 @@ export default function InfrastructurePage() {
                         <div className="w-full md:w-5/12 relative bg-secondary flex items-center justify-center p-12">
                             <Route className="w-32 h-32 text-white/10 absolute inset-0 m-auto" />
                             <div className="relative z-10 text-center">
-                                <div className="text-accent font-bold text-5xl font-heading mb-2">PAN India</div>
+                                <div className="text-accent font-bold text-5xl font-heading mb-2">Global Outreach</div>
                                 <div className="text-white uppercase tracking-widest text-sm font-semibold">Supply Coverage Map</div>
                             </div>
                         </div>

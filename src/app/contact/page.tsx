@@ -52,7 +52,7 @@ export default function ContactPage() {
                                         <label htmlFor="phone" className="text-sm font-semibold text-gray-600 block">Phone/WhatsApp *</label>
                                         <div className="relative">
                                             <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                            <input type="tel" id="phone" className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-sm focus:bg-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" placeholder="+91 98765 43210" required />
+                                            <input type="tel" id="phone" className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-sm focus:bg-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" placeholder="+91 90991 83126" required />
                                         </div>
                                     </div>
                                     <div className="space-y-2">
@@ -110,7 +110,7 @@ export default function ContactPage() {
                                         </div>
                                         <div>
                                             <h4 className="font-semibold text-accent uppercase text-xs tracking-wider mb-1">Corporate HQ & Warehouse</h4>
-                                            <p className="text-gray-300 leading-relaxed text-sm">123 Industrial Estate, Phase II<br />Warehouse District, New Delhi<br />India 110020</p>
+                                            <p className="text-gray-300 leading-relaxed text-sm">425-430 - Vivekanand Industrial Park<br />Kubadthal, Ahmedabad<br />Gujarat (India)</p>
                                         </div>
                                     </li>
                                     <li className="flex gap-4">
@@ -119,7 +119,7 @@ export default function ContactPage() {
                                         </div>
                                         <div>
                                             <h4 className="font-semibold text-accent uppercase text-xs tracking-wider mb-1">B2B Sales Support</h4>
-                                            <p className="text-gray-300 leading-relaxed text-sm"><a href="tel:+919876543210" className="hover:text-white transition-colors">+91 98765 43210</a><br /><span className="text-xs text-gray-400">Mon - Sat: 9:00 AM - 7:00 PM</span></p>
+                                            <p className="text-gray-300 leading-relaxed text-sm"><a href="tel:+919099183126" className="hover:text-white transition-colors">+91 9099183126</a><br /><span className="text-xs text-gray-400">Mon - Sat: 9:00 AM - 7:00 PM</span></p>
                                         </div>
                                     </li>
                                     <li className="flex gap-4">
@@ -128,7 +128,7 @@ export default function ContactPage() {
                                         </div>
                                         <div>
                                             <h4 className="font-semibold text-accent uppercase text-xs tracking-wider mb-1">General Inquiries</h4>
-                                            <p className="text-gray-300 leading-relaxed text-sm"><a href="mailto:info@shreeumiya.com" className="hover:text-white transition-colors">info@shreeumiya.com</a></p>
+                                            <p className="text-gray-300 leading-relaxed text-sm"><a href="mailto:info@shreeumiyaenterprise.in" className="hover:text-white transition-colors">info@shreeumiyaenterprise.in</a></p>
                                         </div>
                                     </li>
                                 </ul>

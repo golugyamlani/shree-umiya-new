@@ -53,15 +53,15 @@ export default function Footer() {
                         <ul className="space-y-4">
                             <li className="flex gap-3 text-sm text-gray-300">
                                 <MapPin className="h-5 w-5 shrink-0 text-accent font-medium mt-0.5" />
-                                <span className="leading-relaxed">123 Industrial Estate, Phase II, Warehouse District, New Delhi, India 110020</span>
+                                <span className="leading-relaxed">425-430 - Vivekanand Industrial Park, Kubadthal, Ahmedabad, Gujarat (India)</span>
                             </li>
                             <li className="flex gap-3 text-sm text-gray-300">
                                 <Phone className="h-5 w-5 shrink-0 text-accent font-medium mt-0.5" />
-                                <a href="tel:+919876543210" className="hover:text-accent transition-colors">+91 98765 43210</a>
+                                <a href="tel:+919099183126" className="hover:text-accent transition-colors">+91 9099183126</a>
                             </li>
                             <li className="flex gap-3 text-sm text-gray-300">
                                 <Mail className="h-5 w-5 shrink-0 text-accent font-medium mt-0.5" />
-                                <a href="mailto:info@shreeumiya.com" className="hover:text-accent transition-colors">info@shreeumiya.com</a>
+                                <a href="mailto:info@shreeumiyaenterprise.in" className="hover:text-accent transition-colors">info@shreeumiyaenterprise.in</a>
                             </li>
                         </ul>
                     </div>

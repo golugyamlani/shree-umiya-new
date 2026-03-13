@@ -41,12 +41,12 @@ export default function AboutPage() {
 
                             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div className="bg-gray-50 border border-gray-100 p-6 rounded-sm">
-                                    <div className="text-3xl font-heading font-bold text-primary mb-2">2005</div>
-                                    <div className="text-sm font-semibold uppercase tracking-wider text-secondary">Founding Year</div>
+                                    <div className="text-3xl font-heading font-bold text-primary mb-2">10+</div>
+                                    <div className="text-sm font-semibold uppercase tracking-wider text-secondary">Years of Expertise</div>
                                 </div>
                                 <div className="bg-gray-50 border border-gray-100 p-6 rounded-sm">
-                                    <div className="text-3xl font-heading font-bold text-primary mb-2">50,000+</div>
-                                    <div className="text-sm font-semibold uppercase tracking-wider text-secondary">Sq.ft Warehouse</div>
+                                    <div className="text-3xl font-heading font-bold text-primary mb-2">15k+</div>
+                                    <div className="text-sm font-semibold uppercase tracking-wider text-secondary">Shipments Completed</div>
                                 </div>
                             </div>
                         </div>

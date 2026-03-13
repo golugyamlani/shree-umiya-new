@@ -4,10 +4,11 @@ import { buttonVariants } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
 const stats = [
-  { id: 1, name: "Years of Experience", value: "25+", icon: TrendingUp },
-  { id: 2, name: "Clients Served", value: "500+", icon: Users },
-  { id: 3, name: "Product Categories", value: "1000+", icon: ShoppingBag },
-  { id: 4, name: "Supply Coverage", value: "PAN India", icon: MapPin },
+  { id: 1, name: "Years of Expertise", value: "10+", icon: TrendingUp },
+  { id: 2, name: "Workers Crew", value: "80+", icon: Users },
+  { id: 3, name: "Team of Experts", value: "50+", icon: ShoppingBag },
+  { id: 4, name: "Shipments Completed", value: "15k+", icon: MapPin },
+  { id: 5, name: "Loyal Customers", value: "200+", icon: Users },
 ];
 
 const categories = [
@@ -30,7 +31,7 @@ const industries = [
 const reasons = [
   "Competitive Wholesale Pricing",
   "Assured Quality Standards",
-  "Timely Nationwide Delivery",
+  "Timely Global Delivery",
   "Custom Branding Options",
   "Strong Vendor Network",
   "Dedicated B2B Support",
@@ -53,7 +54,7 @@ export default function Home() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-white">Delivered at Scale.</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl leading-relaxed border-l-2 border-gray-600 pl-4 font-light">
-            Trusted bulk suppliers for hotels, hospitals, hostels, and institutions. Consistent quality, competitive pricing, and dependable nationwide delivery.
+            Trusted bulk suppliers for hotels, hospitals, hostels, and institutions. Consistent quality, competitive pricing, and dependable global delivery.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
             <Link
@@ -74,9 +75,9 @@ export default function Home() {
 
       {/* Snapshot Stats Section */}
       <section className="bg-primary text-white py-12 relative z-10 -mt-8 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 rounded-sm shadow-2xl">
-        <dl className="grid grid-cols-2 gap-x-8 gap-y-12 sm:grid-cols-4 sm:divide-x sm:divide-white/20">
-          {stats.map((stat, index) => (
-            <div key={stat.id} className={cn("flex flex-col items-center", index !== 0 && "sm:pl-8")}>
+        <dl className="grid grid-cols-2 gap-x-8 sm:gap-x-0 gap-y-12 sm:grid-cols-5 sm:divide-x sm:divide-white/20">
+          {stats.map((stat) => (
+            <div key={stat.id} className="flex flex-col items-center justify-center">
               <stat.icon className="h-8 w-8 text-white/80 mb-4" />
               <dt className="text-sm font-medium leading-6 text-white/80 uppercase tracking-wider text-center">{stat.name}</dt>
               <dd className="order-first text-4xl font-bold tracking-tight text-white font-heading">{stat.value}</dd>
