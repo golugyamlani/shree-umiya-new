@@ -5,10 +5,10 @@ import { cn } from "@/lib/utils";
 
 const stats = [
   { id: 1, name: "Years of Expertise", value: "10+", icon: TrendingUp },
-  { id: 2, name: "Workers Crew", value: "80+", icon: Users },
   { id: 3, name: "Team of Experts", value: "50+", icon: ShoppingBag },
-  { id: 4, name: "Shipments Completed", value: "15k+", icon: MapPin },
+  { id: 2, name: "Workers Crew", value: "80+", icon: Users },
   { id: 5, name: "Loyal Customers", value: "200+", icon: Users },
+  { id: 4, name: "Shipments Completed", value: "15k+", icon: MapPin },
 ];
 
 const categories = [
@@ -77,10 +77,10 @@ export default function Home() {
       <section className="bg-primary text-white py-12 relative z-10 -mt-8 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 rounded-sm shadow-2xl">
         <dl className="grid grid-cols-2 gap-x-8 sm:gap-x-0 gap-y-12 sm:grid-cols-5 sm:divide-x sm:divide-white/20">
           {stats.map((stat) => (
-            <div key={stat.id} className="flex flex-col items-center justify-center">
-              <stat.icon className="h-8 w-8 text-white/80 mb-4" />
+            <div key={stat.id} className="flex flex-col items-center justify-center gap-3">
+              <stat.icon className="h-8 w-8 text-white/80" />
+              <dd className="text-4xl font-bold tracking-tight text-white font-heading">{stat.value}</dd>
               <dt className="text-sm font-medium leading-6 text-white/80 uppercase tracking-wider text-center">{stat.name}</dt>
-              <dd className="order-first text-4xl font-bold tracking-tight text-white font-heading">{stat.value}</dd>
             </div>
           ))}
         </dl>
