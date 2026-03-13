@@ -14,10 +14,17 @@ const CATEGORIES = [
     "Platform Beds"
 ];
 
+type VariantOption = {
+    label: string;
+};
+
 type ProductVariant = {
-    colors?: string[];
-    capacity?: string[];
-    dimensions?: string[];
+    colors?: VariantOption[];
+    capacity?: VariantOption[];
+    dimensions?: VariantOption[];
+    combinations?: {
+        [key: string]: string[]; // e.g. "Charcoal - Twin" -> ["url"]
+    };
 };
 
 type Product = {
@@ -28,35 +35,60 @@ type Product = {
     spec: string;
     price: string;
     image: string;
+    hoverImage?: string;
+    gallery?: string[];
     variants?: ProductVariant;
 };
 
 const PRODUCTS: Product[] = [
-    { id: 1, name: "Premium White Duvet Cover", category: "Platform Beds", moq: "50 Pieces", spec: "300 TC Cotton, Commercial Grade. Designed for high-cycle industrial laundering. Features a hidden zipper closure and internal corner ties to secure the duvet insert.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=800&auto=format&fit=crop", variants: { colors: ["White", "Charcoal", "Navy"], dimensions: ["Twin", "Queen", "King"] } },
-    { id: 2, name: "Luxury Bath Towel Set", category: "Bath", moq: "100 Sets", spec: "600 GSM, 100% Ring Spun Cotton. Double-stitched hems for enhanced durability. Extremely plush and absorbent, perfect for 4-star and 5-star properties.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=800&auto=format&fit=crop", variants: { colors: ["White", "Beige"] } },
-    { id: 3, name: "Eco-Friendly Toiletries Kit", category: "Amenities", moq: "500 Kits", spec: "Includes bamboo toothbrush, sulphate-free soaps, and biodegradable packaging. Sourced sustainably to help your property meet green certification standards.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800&auto=format&fit=crop" },
-    { id: 4, name: "Heavy Duty Cleaning Cart", category: "Paper & Bio Products", moq: "5 Units", spec: "3-shelf capacity with a 25-gallon vinyl bag. Non-marking 8-inch wheels. Built from commercial-grade molded plastic to resist cracking and peeling.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800&auto=format&fit=crop", variants: { capacity: ["Standard (3-Shelf)", "Large (4-Shelf, Dual Bag)"] } },
-    { id: 5, name: "Hypoallergenic Mattress Protector", category: "Platform Beds", moq: "50 Pieces", spec: "Waterproof, breathable TPU layer. Protects against dust mites, fluids, and perspiration. Machine washable in warm water. Knitted skirt stretches to fit up to 18-inch deep mattresses.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=800&auto=format&fit=crop", variants: { dimensions: ["Single", "Twin", "Queen", "King"] } },
-    { id: 6, name: "Biodegradable Trash Bags", category: "Paper & Bio Products", moq: "1000 Rolls", spec: "Heavy-duty 50L capacity. Made from biodegradable plant-based materials. Puncture and tear resistant. Ideal for room bins and public area receptacles.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?q=80&w=800&auto=format&fit=crop", variants: { capacity: ["15L", "30L", "50L", "100L"], colors: ["Green", "Black", "Clear"] } },
+    { id: 1, name: "Premium White Duvet Cover", category: "Platform Beds", moq: "50 Pieces", spec: "300 TC Cotton, Commercial Grade. Designed for high-cycle industrial laundering. Features a hidden zipper closure and internal corner ties to secure the duvet insert.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=800&auto=format&fit=crop", hoverImage: "https://images.unsplash.com/photo-1541123437800-141315317f0a?q=80&w=800&auto=format&fit=crop", variants: { colors: [{label: "White"}, {label: "Charcoal"}, {label: "Navy"}], dimensions: [{label: "Twin"}, {label: "Queen"}, {label: "King"}], combinations: { "Charcoal - Twin": ["https://images.unsplash.com/photo-1629851722838-8ffcba4bc6f0?q=80&w=800&auto=format&fit=crop"], "Navy - King": ["https://images.unsplash.com/photo-1549488344-c10bf7b75253?q=80&w=800&auto=format&fit=crop"] } } },
+    { id: 2, name: "Luxury Bath Towel Set", category: "Bath", moq: "100 Sets", spec: "600 GSM, 100% Ring Spun Cotton. Double-stitched hems for enhanced durability. Extremely plush and absorbent, perfect for 4-star and 5-star properties.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=800&auto=format&fit=crop", hoverImage: "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?q=80&w=800&auto=format&fit=crop", variants: { colors: [{label: "White"}, {label: "Beige"}] } },
+    { id: 3, name: "Eco-Friendly Toiletries Kit", category: "Amenities", moq: "500 Kits", spec: "Includes bamboo toothbrush, sulphate-free soaps, and biodegradable packaging. Sourced sustainably to help your property meet green certification standards.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800&auto=format&fit=crop", gallery: ["https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=800&auto=format&fit=crop", "https://images.unsplash.com/photo-1595152772186-b48deea2dce8?q=80&w=800&auto=format&fit=crop"] },
+    { id: 4, name: "Heavy Duty Cleaning Cart", category: "Paper & Bio Products", moq: "5 Units", spec: "3-shelf capacity with a 25-gallon vinyl bag. Non-marking 8-inch wheels. Built from commercial-grade molded plastic to resist cracking and peeling.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800&auto=format&fit=crop", variants: { capacity: [{label: "Standard (3-Shelf)"}, {label: "Large (4-Shelf, Dual Bag)"}] } },
+    { id: 5, name: "Hypoallergenic Mattress Protector", category: "Platform Beds", moq: "50 Pieces", spec: "Waterproof, breathable TPU layer. Protects against dust mites, fluids, and perspiration. Machine washable in warm water. Knitted skirt stretches to fit up to 18-inch deep mattresses.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=800&auto=format&fit=crop", variants: { dimensions: [{label: "Single"}, {label: "Twin"}, {label: "Queen"}, {label: "King"}] } },
+    { id: 6, name: "Biodegradable Trash Bags", category: "Paper & Bio Products", moq: "1000 Rolls", spec: "Heavy-duty 50L capacity. Made from biodegradable plant-based materials. Puncture and tear resistant. Ideal for room bins and public area receptacles.", price: "Bulk pricing available on request", image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?q=80&w=800&auto=format&fit=crop", variants: { capacity: [{label: "15L"}, {label: "30L"}, {label: "50L"}, {label: "100L"}], colors: [{label: "Green"}, {label: "Black"}, {label: "Clear"}] } },
 ];
 
 export default function ProductsPage() {
     const [activeCategory, setActiveCategory] = useState("All");
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-    const [selectedVariants, setSelectedVariants] = useState<{ [key: string]: string }>({});
+    const [selectedVariants, setSelectedVariants] = useState<{ [key: string]: VariantOption }>({});
+    const [activeGalleryImage, setActiveGalleryImage] = useState<string | null>(null);
 
     const handleProductSelect = (product: Product) => {
         setSelectedProduct(product);
-        const defaults: { [key: string]: string } = {};
+        const defaults: { [key: string]: VariantOption } = {};
         if (product.variants?.colors?.length) defaults.colors = product.variants.colors[0];
         if (product.variants?.capacity?.length) defaults.capacity = product.variants.capacity[0];
         if (product.variants?.dimensions?.length) defaults.dimensions = product.variants.dimensions[0];
         setSelectedVariants(defaults);
+        setActiveGalleryImage(null); // Reset manual override on open
     };
 
-    const handleVariantChange = (type: string, value: string) => {
-        setSelectedVariants(prev => ({ ...prev, [type]: value }));
+    const handleVariantChange = (type: string, option: VariantOption) => {
+        setSelectedVariants(prev => ({ ...prev, [type]: option }));
+    };
+
+    const getCurrentImage = () => {
+        if (!selectedProduct) return "";
+        
+        // Assemble combination key based on selection order (colors -> dimensions -> capacity)
+        const activeLabels: string[] = [];
+        if (selectedProduct.variants?.colors && selectedVariants.colors) activeLabels.push(selectedVariants.colors.label);
+        if (selectedProduct.variants?.dimensions && selectedVariants.dimensions) activeLabels.push(selectedVariants.dimensions.label);
+        if (selectedProduct.variants?.capacity && selectedVariants.capacity) activeLabels.push(selectedVariants.capacity.label);
+
+        const combinationKey = activeLabels.join(' - ');
+
+        // Check if there are specific images for this combination
+        if (selectedProduct.variants?.combinations && selectedProduct.variants.combinations[combinationKey]) {
+            const images = selectedProduct.variants.combinations[combinationKey];
+            if (images.length > 0) return images[0];
+        }
+
+        // 3. Fallback to main product image
+        return selectedProduct.image;
     };
 
     const filteredProducts = PRODUCTS.filter(p => {
@@ -132,8 +164,19 @@ export default function ProductsPage() {
                                 >
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <div className="relative h-56 overflow-hidden bg-gray-100">
-                                        <img src={product.image} alt={product.name} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
-                                        <div className="absolute top-3 left-3 bg-secondary text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-sm shadow-md">
+                                        <img 
+                                            src={product.image} 
+                                            alt={product.name} 
+                                            className={cn("object-cover w-full h-full transition-all duration-500 group-hover:scale-105", product.hoverImage ? "group-hover:opacity-0" : "")} 
+                                        />
+                                        {product.hoverImage && (
+                                            <img 
+                                                src={product.hoverImage} 
+                                                alt={`${product.name} Hover`} 
+                                                className="absolute inset-0 object-cover w-full h-full opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
+                                            />
+                                        )}
+                                        <div className="absolute top-3 left-3 bg-secondary text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-sm shadow-md z-10">
                                             {product.category}
                                         </div>
                                     </div>
@@ -185,12 +228,42 @@ export default function ProductsPage() {
                             <X className="w-5 h-5" />
                         </button>
 
-                        <div className="w-full md:w-1/2 h-64 md:h-auto bg-gray-100 relative">
+                        <div className="w-full md:w-1/2 h-64 md:h-auto bg-gray-100 relative flex object-cover flex-col break-inside-avoid">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full h-full object-cover" />
+                            <img src={activeGalleryImage || getCurrentImage()} alt={selectedProduct.name} className="w-full flex-grow h-[300px] md:h-full object-cover transition-opacity duration-300" />
                             <div className="absolute top-6 left-6 bg-white text-secondary text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-sm shadow-lg">
                                 {selectedProduct.category}
                             </div>
+                            
+                            {/* Generic Gallery Thumbnails */}
+                            {(selectedProduct.gallery && selectedProduct.gallery.length > 0) && (
+                                <div className="absolute bottom-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent flex gap-3 overflow-x-auto">
+                                    {/* Main Image Base */}
+                                    <button 
+                                        onClick={() => setActiveGalleryImage(null)}
+                                        className={cn(
+                                            "w-20 h-20 flex-shrink-0 border-2 rounded-sm overflow-hidden transition-all",
+                                            !activeGalleryImage ? "border-primary scale-105 shadow-lg" : "border-white/50 hover:border-white/80 opacity-70 hover:opacity-100"
+                                        )}
+                                    >
+                                        <img src={selectedProduct.image} className="w-full h-full object-cover" alt="Main cover" />
+                                    </button>
+                                    
+                                    {/* Additional Shots */}
+                                    {selectedProduct.gallery.map((galImg, idx) => (
+                                        <button 
+                                            key={idx}
+                                            onClick={() => setActiveGalleryImage(galImg)}
+                                            className={cn(
+                                                "w-20 h-20 flex-shrink-0 border-2 rounded-sm overflow-hidden transition-all",
+                                                activeGalleryImage === galImg ? "border-primary scale-105 shadow-lg opacity-100" : "border-white/50 hover:border-white/80 opacity-70 hover:opacity-100"
+                                            )}
+                                        >
+                                            <img src={galImg} className="w-full h-full object-cover" alt="Gallery thumbnail" />
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col overflow-y-auto">
@@ -214,18 +287,18 @@ export default function ProductsPage() {
                                             <div>
                                                 <h4 className="text-xs font-bold uppercase tracking-widest text-secondary mb-3">Select Color</h4>
                                                 <div className="flex flex-wrap gap-3">
-                                                    {selectedProduct.variants.colors.map(color => (
+                                                    {selectedProduct.variants.colors.map(colorOpt => (
                                                         <button
-                                                            key={color}
-                                                            onClick={() => handleVariantChange('colors', color)}
+                                                            key={colorOpt.label}
+                                                            onClick={() => handleVariantChange('colors', colorOpt)}
                                                             className={cn(
                                                                 "px-4 py-2 border rounded-sm text-sm font-semibold transition-all",
-                                                                selectedVariants.colors === color
+                                                                selectedVariants.colors?.label === colorOpt.label
                                                                     ? "bg-secondary text-white border-secondary shadow-md"
                                                                     : "bg-white text-gray-600 border-gray-200 hover:border-primary hover:text-primary"
                                                             )}
                                                         >
-                                                            {color}
+                                                            {colorOpt.label}
                                                         </button>
                                                     ))}
                                                 </div>
@@ -235,18 +308,18 @@ export default function ProductsPage() {
                                             <div>
                                                 <h4 className="text-xs font-bold uppercase tracking-widest text-secondary mb-3">Select Dimensions</h4>
                                                 <div className="flex flex-wrap gap-3">
-                                                    {selectedProduct.variants.dimensions.map(dim => (
+                                                    {selectedProduct.variants.dimensions.map(dimOpt => (
                                                         <button
-                                                            key={dim}
-                                                            onClick={() => handleVariantChange('dimensions', dim)}
+                                                            key={dimOpt.label}
+                                                            onClick={() => handleVariantChange('dimensions', dimOpt)}
                                                             className={cn(
                                                                 "px-4 py-2 border rounded-sm text-sm font-semibold transition-all",
-                                                                selectedVariants.dimensions === dim
+                                                                selectedVariants.dimensions?.label === dimOpt.label
                                                                     ? "bg-secondary text-white border-secondary shadow-md"
                                                                     : "bg-white text-gray-600 border-gray-200 hover:border-primary hover:text-primary"
                                                             )}
                                                         >
-                                                            {dim}
+                                                            {dimOpt.label}
                                                         </button>
                                                     ))}
                                                 </div>
@@ -256,18 +329,18 @@ export default function ProductsPage() {
                                             <div>
                                                 <h4 className="text-xs font-bold uppercase tracking-widest text-secondary mb-3">Select Capacity</h4>
                                                 <div className="flex flex-wrap gap-3">
-                                                    {selectedProduct.variants.capacity.map(cap => (
+                                                    {selectedProduct.variants.capacity.map(capOpt => (
                                                         <button
-                                                            key={cap}
-                                                            onClick={() => handleVariantChange('capacity', cap)}
+                                                            key={capOpt.label}
+                                                            onClick={() => handleVariantChange('capacity', capOpt)}
                                                             className={cn(
                                                                 "px-4 py-2 border rounded-sm text-sm font-semibold transition-all",
-                                                                selectedVariants.capacity === cap
+                                                                selectedVariants.capacity?.label === capOpt.label
                                                                     ? "bg-secondary text-white border-secondary shadow-md"
                                                                     : "bg-white text-gray-600 border-gray-200 hover:border-primary hover:text-primary"
                                                             )}
                                                         >
-                                                            {cap}
+                                                            {capOpt.label}
                                                         </button>
                                                     ))}
                                                 </div>
@@ -291,7 +364,7 @@ export default function ProductsPage() {
                             <div className="mt-10 pt-6 border-t border-gray-100">
                                 <button
                                     onClick={() => {
-                                        const variantString = Object.entries(selectedVariants).map(([k,v]) => `${k}: ${v}`).join(', ');
+                                        const variantString = Object.entries(selectedVariants).map(([k,v]) => `${k}: ${v.label}`).join(', ');
                                         const itemDesc = variantString ? `${selectedProduct.name} (${variantString})` : selectedProduct.name;
                                         alert(`Item "${itemDesc}" added to your quote.`);
                                         setSelectedProduct(null);

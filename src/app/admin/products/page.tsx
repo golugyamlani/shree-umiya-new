@@ -5,10 +5,17 @@ import Link from "next/link";
 import { Plus, Search, Edit2, Trash2, Filter } from "lucide-react";
 
 // Using the same mock data structure as the live site for now
+type VariantOption = {
+    label: string;
+};
+
 type ProductVariant = {
-    colors?: string[];
-    capacity?: string[];
-    dimensions?: string[];
+    colors?: VariantOption[];
+    capacity?: VariantOption[];
+    dimensions?: VariantOption[];
+    combinations?: {
+        [key: string]: string[]; // key: "Blue-King" -> ["url1", "url2"]
+    };
 };
 
 type Product = {
@@ -18,14 +25,15 @@ type Product = {
     moq: string;
     price: string;
     image: string;
+    hoverImage?: string;
     variants?: ProductVariant;
 };
 
 const MOCK_PRODUCTS: Product[] = [
-    { id: 1, name: "Premium White Duvet Cover", category: "Platform Beds", moq: "50 Pieces", price: "Bulk pricing", image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=800&auto=format&fit=crop", variants: { colors: ["White", "Charcoal", "Navy"], dimensions: ["Twin", "Queen", "King"] } },
-    { id: 2, name: "Luxury Bath Towel Set", category: "Bath", moq: "100 Sets", price: "Bulk pricing", image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=800&auto=format&fit=crop", variants: { colors: ["White", "Beige"] } },
+    { id: 1, name: "Premium White Duvet Cover", category: "Platform Beds", moq: "50 Pieces", price: "Bulk pricing", image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=800&auto=format&fit=crop", hoverImage: "https://images.unsplash.com/photo-1541123437800-141315317f0a?q=80&w=800&auto=format&fit=crop", variants: { colors: [{label: "White"}, {label: "Charcoal"}, {label: "Navy"}], dimensions: [{label: "Twin"}, {label: "Queen"}, {label: "King"}], combinations: { "Charcoal-Twin": ["https://images.unsplash.com/photo-1629851722838-8ffcba4bc6f0?q=80&w=800&auto=format&fit=crop"], "Navy-King": ["https://images.unsplash.com/photo-1549488344-c10bf7b75253?q=80&w=800&auto=format&fit=crop"] } } },
+    { id: 2, name: "Luxury Bath Towel Set", category: "Bath", moq: "100 Sets", price: "Bulk pricing", image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=800&auto=format&fit=crop", hoverImage: "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?q=80&w=800&auto=format&fit=crop", variants: { colors: [{label: "White"}, {label: "Beige"}] } },
     { id: 3, name: "Eco-Friendly Toiletries Kit", category: "Amenities", moq: "500 Kits", price: "Bulk pricing", image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800&auto=format&fit=crop" },
-    { id: 4, name: "Heavy Duty Cleaning Cart", category: "Paper & Bio Products", moq: "5 Units", price: "Bulk pricing", image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800&auto=format&fit=crop", variants: { capacity: ["Standard (3-Shelf)", "Large (4-Shelf, Dual Bag)"] } },
+    { id: 4, name: "Heavy Duty Cleaning Cart", category: "Paper & Bio Products", moq: "5 Units", price: "Bulk pricing", image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800&auto=format&fit=crop", variants: { capacity: [{label: "Standard (3-Shelf)"}, {label: "Large (4-Shelf, Dual Bag)"}] } },
 ];
 
 export default function AdminProductsPage() {
