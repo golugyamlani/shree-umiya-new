@@ -1,0 +1,330 @@
+"use server";
+
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { getDb } from "@/db";
+import {
+  products,
+  productGalleryImages,
+  productVariants,
+  productVariantCombinations,
+} from "@/db/schema";
+import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
+import { nanoid } from "nanoid";
+
+// ─── Helper: get D1 db client from Cloudflare context ────────────────────────
+function getDbClient() {
+  try {
+    const { env } = getCloudflareContext();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return getDb(env as any);
+  } catch {
+    throw new Error(
+      "DB_UNAVAILABLE: Cloudflare D1 is not available in `next dev` mode. " +
+      "Run `npm run preview` to test with real Cloudflare bindings."
+    );
+  }
+}
+
+// ─── Helper: check if we have Cloudflare context ──────────────────────────────
+function hasCloudflareContext(): boolean {
+  try {
+    getCloudflareContext();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// ─── Helper: upload a File to R2 and return its public URL ────────────────────
+async function uploadToR2(file: File, prefix: string): Promise<string> {
+  const { env } = getCloudflareContext();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const r2 = (env as any).R2_ASSETS;
+  const key = `${prefix}/${nanoid()}-${file.name.replace(/\s+/g, "_")}`;
+  const buffer = await file.arrayBuffer();
+  await r2.put(key, buffer, {
+    httpMetadata: { contentType: file.type },
+  });
+  // Return an internal API URL that serves the image from R2
+  // Once a CDN domain is configured on the bucket, update this to the CDN URL
+  return `/api/images/${key}`;
+}
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+export type ProductFormData = {
+  name: string;
+  categoryId: string;
+  moq: string;
+  price: string;
+  specifications: string;
+  coverImageFile?: File | null;
+  hoverImageFile?: File | null;
+  galleryFiles?: File[];
+  variants?: string; // JSON stringified Array<{ type: string; label: string }>
+  variantCombinations?: string; // JSON stringified Array<{ key: string; imageFiles?: File[] }>
+  existingGalleryUrls?: string[]; // optionally stringified, but string[] works if flat
+  existingVariantCombinations?: string; // JSON stringified
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CREATE
+// ─────────────────────────────────────────────────────────────────────────────
+export async function createProduct(data: ProductFormData) {
+  if (!hasCloudflareContext()) {
+    console.warn("[DEV] Cloudflare context not available. Run `npm run preview` to test uploads.");
+    return { success: false, error: "Run `npm run preview` to test with real Cloudflare bindings." };
+  }
+  const db = getDbClient();
+  const productId = nanoid();
+
+  let coverImage: string | undefined;
+  let hoverImage: string | undefined;
+
+  // Upload cover image
+  if (data.coverImageFile && data.coverImageFile.size > 0) {
+    coverImage = await uploadToR2(data.coverImageFile, `products/${productId}/cover`);
+  }
+
+  // Upload hover image
+  if (data.hoverImageFile && data.hoverImageFile.size > 0) {
+    hoverImage = await uploadToR2(data.hoverImageFile, `products/${productId}/hover`);
+  }
+
+  // Insert product row
+  await db.insert(products).values({
+    id: productId,
+    name: data.name,
+    categoryId: data.categoryId,
+    moq: data.moq,
+    price: parseFloat(data.price) || undefined,
+    specifications: data.specifications,
+    coverImage,
+    hoverImage,
+  });
+  console.log("Inserted product row.");
+
+  // Upload and insert gallery images
+  if (data.galleryFiles && data.galleryFiles.length > 0) {
+    const galleryVals = [];
+    for (let i = 0; i < data.galleryFiles.length; i++) {
+      const file = data.galleryFiles[i];
+      if (file.size > 0) {
+        const url = await uploadToR2(file, `products/${productId}/gallery`);
+        galleryVals.push({ id: nanoid(), productId, url, displayOrder: i });
+      }
+    }
+    if (galleryVals.length > 0) {
+      await db.insert(productGalleryImages).values(galleryVals);
+    }
+  }
+
+  // Parse JSON strings back to arrays
+  const parsedVariants = data.variants ? JSON.parse(data.variants) : [];
+  const parsedVariantCombinations = data.variantCombinations ? JSON.parse(data.variantCombinations) : [];
+
+  console.log("Inserting flat variants", parsedVariants.length);
+  // Insert flat variant rows (e.g. Color: Red, Color: Blue, Size: King)
+  if (parsedVariants && parsedVariants.length > 0) {
+    const variantVals = parsedVariants.map((v: any) => ({
+      id: nanoid(),
+      productId,
+      type: v.type,
+      label: v.label,
+    }));
+    await db.insert(productVariants).values(variantVals);
+  }
+
+  console.log("Inserting combination rows", parsedVariantCombinations.length);
+  // Insert variant combination rows with their images
+  if (parsedVariantCombinations && parsedVariantCombinations.length > 0) {
+    const comboVals = parsedVariantCombinations.map((combo: any) => ({
+      id: nanoid(),
+      productId,
+      key: combo.key,
+      imageUrls: JSON.stringify([]),
+    }));
+    await db.insert(productVariantCombinations).values(comboVals);
+  }
+
+  revalidatePath("/admin/products");
+  revalidatePath("/products");
+
+  return { success: true, productId };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// READ ALL (one join query)
+// ─────────────────────────────────────────────────────────────────────────────
+export async function getProducts() {
+  if (!hasCloudflareContext()) {
+    console.warn("[DEV] Cloudflare context not available — returning empty product list. Run `npm run preview` for full functionality.");
+    return [];
+  }
+  const db = getDbClient();
+
+  const rows = await db
+    .select()
+    .from(products)
+    .leftJoin(productGalleryImages, eq(products.id, productGalleryImages.productId))
+    .leftJoin(productVariants, eq(products.id, productVariants.productId))
+    .leftJoin(productVariantCombinations, eq(products.id, productVariantCombinations.productId));
+
+  // Group flat join rows into structured product objects
+  const map = new Map<string, any>();
+
+  for (const row of rows) {
+    const p = row.products;
+    if (!map.has(p.id)) {
+      map.set(p.id, {
+        ...p,
+        gallery: [],
+        variants: [],
+        combinations: [],
+      });
+    }
+
+    const entry = map.get(p.id);
+
+    if (row.product_gallery_images && !entry.gallery.find((g: any) => g.id === row.product_gallery_images!.id)) {
+      entry.gallery.push(row.product_gallery_images);
+    }
+
+    if (row.product_variants && !entry.variants.find((v: any) => v.id === row.product_variants!.id)) {
+      entry.variants.push(row.product_variants);
+    }
+
+    if (row.product_variant_combinations && !entry.combinations.find((c: any) => c.id === row.product_variant_combinations!.id)) {
+      entry.combinations.push({
+        ...row.product_variant_combinations,
+        imageUrls: JSON.parse(row.product_variant_combinations.imageUrls ?? "[]"),
+      });
+    }
+  }
+
+  return Array.from(map.values());
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// READ ONE
+// ─────────────────────────────────────────────────────────────────────────────
+export async function getProductById(id: string) {
+  const db = getDbClient();
+
+  const allProducts = await getProducts();
+  return allProducts.find((p) => p.id === id) ?? null;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// UPDATE
+// ─────────────────────────────────────────────────────────────────────────────
+export async function updateProduct(id: string, data: ProductFormData) {
+  const db = getDbClient();
+
+  let coverImage: string | undefined;
+  let hoverImage: string | undefined;
+
+  if (data.coverImageFile && data.coverImageFile.size > 0) {
+    coverImage = await uploadToR2(data.coverImageFile, `products/${id}/cover`);
+  }
+
+  if (data.hoverImageFile && data.hoverImageFile.size > 0) {
+    hoverImage = await uploadToR2(data.hoverImageFile, `products/${id}/hover`);
+  }
+
+  await db
+    .update(products)
+    .set({
+      name: data.name,
+      categoryId: data.categoryId,
+      moq: data.moq,
+      price: parseFloat(data.price) || undefined,
+      specifications: data.specifications,
+      ...(coverImage ? { coverImage } : {}),
+      ...(hoverImage ? { hoverImage } : {}),
+    })
+    .where(eq(products.id, id));
+
+  // For simplicity: delete and re-insert all variants/gallery on update
+  await db.delete(productVariants).where(eq(productVariants.productId, id));
+  await db.delete(productGalleryImages).where(eq(productGalleryImages.productId, id));
+  await db.delete(productVariantCombinations).where(eq(productVariantCombinations.productId, id));
+
+  // Parse JSON strings back to arrays
+  const parsedVariants = data.variants ? JSON.parse(data.variants) : [];
+  const parsedVariantCombinations = data.variantCombinations ? JSON.parse(data.variantCombinations) : [];
+  const parsedExistingCombinations = data.existingVariantCombinations ? JSON.parse(data.existingVariantCombinations) : [];
+
+  // Re-insert variants
+  if (parsedVariants && parsedVariants.length > 0) {
+    const variantVals = parsedVariants.map((v: any) => ({ id: nanoid(), productId: id, type: v.type, label: v.label }));
+    await db.insert(productVariants).values(variantVals);
+  }
+
+  // Re-insert gallery
+  let galleryIndex = 0;
+  const existingGalleryVals = [];
+  if (data.existingGalleryUrls && data.existingGalleryUrls.length > 0) {
+    for (const url of data.existingGalleryUrls) {
+      existingGalleryVals.push({ id: nanoid(), productId: id, url, displayOrder: galleryIndex++ });
+    }
+    await db.insert(productGalleryImages).values(existingGalleryVals);
+  }
+
+  if (data.galleryFiles && data.galleryFiles.length > 0) {
+    const newGalleryVals = [];
+    for (let i = 0; i < data.galleryFiles.length; i++) {
+      const file = data.galleryFiles[i];
+      if (file.size > 0) {
+        const url = await uploadToR2(file, `products/${id}/gallery`);
+        newGalleryVals.push({ id: nanoid(), productId: id, url, displayOrder: galleryIndex++ });
+      }
+    }
+    if (newGalleryVals.length > 0) {
+      await db.insert(productGalleryImages).values(newGalleryVals);
+    }
+  }
+
+  // Combinations mapping
+  const combinationsMap = new Map<string, string[]>();
+  if (parsedExistingCombinations) {
+    for (const combo of parsedExistingCombinations) {
+      combinationsMap.set(combo.key, [...combo.imageUrls]);
+    }
+  }
+
+  // Re-insert combinations
+  if (parsedVariantCombinations && parsedVariantCombinations.length > 0) {
+    const comboVals = parsedVariantCombinations.map((combo: any) => {
+      const imageUrls: string[] = combinationsMap.get(combo.key) || [];
+      return {
+        id: nanoid(),
+        productId: id,
+        key: combo.key,
+        imageUrls: JSON.stringify(imageUrls),
+      };
+    });
+    await db.insert(productVariantCombinations).values(comboVals);
+  }
+
+  revalidatePath("/admin/products");
+  revalidatePath(`/admin/products/${id}`);
+  revalidatePath("/products");
+
+  return { success: true };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DELETE
+// ─────────────────────────────────────────────────────────────────────────────
+export async function deleteProduct(id: string) {
+  const db = getDbClient();
+
+  // onDelete: cascade in schema handles child rows automatically
+  await db.delete(products).where(eq(products.id, id));
+
+  revalidatePath("/admin/products");
+  revalidatePath("/products");
+
+  return { success: true };
+}

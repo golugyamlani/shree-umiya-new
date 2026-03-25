@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, Package, Settings, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { logoutAction } from "@/app/actions/auth";
 
 const adminNav = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -49,10 +50,12 @@ export default function AdminLayout({
                 </nav>
 
                 <div className="p-4 border-t border-white/10">
-                    <button className="flex w-full items-center gap-3 px-4 py-3 text-sm font-semibold text-gray-300 hover:text-white hover:bg-white/10 rounded-sm transition-colors">
-                        <LogOut className="w-5 h-5" />
-                        Sign Out
-                    </button>
+                    <form action={logoutAction} className="w-full">
+                        <button type="submit" className="flex w-full items-center gap-3 px-4 py-3 text-sm font-semibold text-gray-300 hover:text-white hover:bg-white/10 rounded-sm transition-colors">
+                            <LogOut className="w-5 h-5" />
+                            Sign Out
+                        </button>
+                    </form>
                 </div>
             </aside>
 
