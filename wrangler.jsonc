@@ -45,7 +45,8 @@
 			"binding": "DB",
 			"database_name": "shree-umiya-db",
 			"database_id": "fc328b59-8653-4962-b254-a992aa289b51",
-			"remote": true
+			"remote": true,
+			"migrations_dir": "src/db/migrations"
 		}
 	]
 }

@@ -70,14 +70,13 @@ export default function ProductsTable({ initialProducts }: { initialProducts: Pr
             <tr>
               <th className="text-left px-6 py-3 font-semibold text-gray-500 uppercase tracking-wider text-xs">Product</th>
               <th className="text-left px-6 py-3 font-semibold text-gray-500 uppercase tracking-wider text-xs hidden md:table-cell">Category</th>
-              <th className="text-left px-6 py-3 font-semibold text-gray-500 uppercase tracking-wider text-xs hidden lg:table-cell">MOQ</th>
               <th className="text-right px-6 py-3 font-semibold text-gray-500 uppercase tracking-wider text-xs">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={4} className="text-center py-12 text-gray-400 font-medium">
+                <td colSpan={3} className="text-center py-12 text-gray-400 font-medium">
                   {searchQuery ? "No products match your search." : "No products yet. Click \"Add New Product\" to create one."}
                 </td>
               </tr>
@@ -103,7 +102,6 @@ export default function ProductsTable({ initialProducts }: { initialProducts: Pr
                   </div>
                 </td>
                 <td className="px-6 py-4 text-gray-600 hidden md:table-cell">{product.categoryId}</td>
-                <td className="px-6 py-4 text-gray-600 hidden lg:table-cell">{product.moq ?? "—"}</td>
                 <td className="px-6 py-4">
                   <div className="flex items-center justify-end gap-2">
                     <Link

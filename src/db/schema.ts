@@ -47,3 +47,11 @@ export const productVariantCombinations = sqliteTable("product_variant_combinati
   key: text("key").notNull(), // e.g., "color:red|size:large"
   imageUrls: text("image_urls"), // Stringified JSON array of R2 URLs specific to this combination
 });
+
+export const teamMembers = sqliteTable("team_members", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  role: text("role").notNull(),
+  image: text("image").notNull(),
+  displayOrder: integer("display_order").default(0),
+});

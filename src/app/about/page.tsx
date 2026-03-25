@@ -4,14 +4,13 @@ import { buttonVariants } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { ArrowRight, Box, CheckCircle, Clock, MapPin, Truck } from "lucide-react";
 
-const TEAM_MEMBERS = [
-    { id: 1, name: "John Doe", role: "Chief Executive Officer", image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop" },
-    { id: 2, name: "Jane Smith", role: "Head of Operations", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop" },
-    { id: 3, name: "David Johnson", role: "Sales Director", image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format&fit=crop" },
-    { id: 4, name: "Emily Brown", role: "Procurement Manager", image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=800&auto=format&fit=crop" }
-];
+import { getTeamMembers } from "@/app/actions/team";
 
-export default function AboutPage() {
+export const dynamic = "force-dynamic";
+
+export default async function AboutPage() {
+    const teamMembers = await getTeamMembers();
+
     return (
         <div className="flex flex-col min-h-screen bg-white">
             {/* Hero Intro Banner */}
@@ -109,20 +108,26 @@ export default function AboutPage() {
                         </h2>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {TEAM_MEMBERS.map((member) => (
-                            <div key={member.id} className="group flex flex-col items-center text-center">
-                                <div className="w-48 h-48 rounded-full overflow-hidden mb-6 border-4 border-gray-50 shadow-lg relative bg-gray-100">
-                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img 
-                                        src={member.image} 
-                                        alt={member.name} 
-                                        className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500 grayscale group-hover:grayscale-0"
-                                    />
+                        {teamMembers.length > 0 ? (
+                            teamMembers.map((member) => (
+                                <div key={member.id} className="group flex flex-col items-center text-center">
+                                    <div className="w-48 h-48 rounded-full overflow-hidden mb-6 border-4 border-gray-50 shadow-lg relative bg-gray-100 flex items-center justify-center">
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img 
+                                            src={member.image} 
+                                            alt={member.name} 
+                                            className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500 grayscale group-hover:grayscale-0"
+                                        />
+                                    </div>
+                                    <h3 className="font-heading font-bold text-xl text-secondary mb-1">{member.name}</h3>
+                                    <p className="text-primary font-semibold text-sm uppercase tracking-wider">{member.role}</p>
                                 </div>
-                                <h3 className="font-heading font-bold text-xl text-secondary mb-1">{member.name}</h3>
-                                <p className="text-primary font-semibold text-sm uppercase tracking-wider">{member.role}</p>
+                            ))
+                        ) : (
+                            <div className="col-span-full text-center text-gray-500 py-10">
+                                More details coming soon.
                             </div>
-                        ))}
+                        )}
                     </div>
                 </div>
             </section>

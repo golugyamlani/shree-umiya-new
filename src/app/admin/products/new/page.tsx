@@ -18,7 +18,7 @@ export default function NewProductPage() {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("Amenities");
   const [moq, setMoq] = useState("");
-  const [price, setPrice] = useState("Bulk pricing available on request");
+  const [price, setPrice] = useState("");
   const [spec, setSpec] = useState("");
   const [features, setFeatures] = useState<string[]>([]);
   const [featureInput, setFeatureInput] = useState("");
@@ -333,15 +333,6 @@ export default function NewProductPage() {
                     <option value="Platform Beds">Platform Beds</option>
                   </select>
                 </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Minimum Order Qty (MOQ) *</label>
-                  <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-sm focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all" placeholder="e.g. 50 Pieces" value={moq} onChange={(e) => setMoq(e.target.value)} />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Pricing Tier</label>
-                <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-sm focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all" value={price} onChange={(e) => setPrice(e.target.value)} />
               </div>
 
 

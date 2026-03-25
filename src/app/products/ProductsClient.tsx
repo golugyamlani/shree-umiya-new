@@ -191,10 +191,6 @@ export default function ProductsClient({ products }: { products: PublicProduct[]
                                             <h3 className="font-heading font-bold text-lg text-secondary mb-2 line-clamp-2 group-hover:text-primary transition-colors">{product.name}</h3>
                                             <p className="text-sm text-gray-500 mb-4 line-clamp-2">{product.spec}</p>
                                             <div className="mt-auto space-y-4">
-                                                <div className="flex items-center justify-between border-t border-gray-100 pt-4">
-                                                    <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">MOQ</span>
-                                                    <span className="text-sm font-bold text-primary bg-primary/10 px-3 py-1 rounded-sm">{product.moq}</span>
-                                                </div>
                                                 <div className="w-full bg-secondary text-white py-3 rounded-sm text-sm font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-2 group-hover:bg-primary">
                                                     View Details
                                                 </div>
@@ -314,16 +310,7 @@ export default function ProductsClient({ products }: { products: PublicProduct[]
                                     </div>
                                 )}
 
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="bg-gray-50 p-4 rounded-sm border border-gray-100">
-                                        <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider block mb-1">Pricing Tier</span>
-                                        <span className="text-sm font-semibold text-secondary">{selectedProduct.price}</span>
-                                    </div>
-                                    <div className="bg-primary/5 p-4 rounded-sm border border-primary/20">
-                                        <span className="text-xs font-semibold text-primary/70 uppercase tracking-wider block mb-1">Minimum Order (MOQ)</span>
-                                        <span className="text-lg font-bold text-primary">{selectedProduct.moq}</span>
-                                    </div>
-                                </div>
+
                             </div>
 
                             <div className="mt-10 pt-6 border-t border-gray-100">

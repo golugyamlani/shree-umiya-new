@@ -370,15 +370,6 @@ export default function EditProductForm({ product }: { product: any }) {
                     <option value="Platform Beds">Platform Beds</option>
                   </select>
                 </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Minimum Order Qty (MOQ) *</label>
-                  <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-sm focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all" placeholder="e.g. 50 Pieces" value={moq} onChange={(e) => setMoq(e.target.value)} />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Pricing Tier</label>
-                <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-sm focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all" value={price} onChange={(e) => setPrice(e.target.value)} />
               </div>
 
               <div className="mt-6 border-t border-gray-100 pt-6">
